@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 
 capLeft = cv2.VideoCapture(0) #sets cap1 as the first camera (0 is the default laptop camera which isn't being used)
-capRight = cv2.VideoCapture(2) #sets cap2 as the second camera
+capRight = cv2.VideoCapture(1) #sets cap2 as the second camera
 
 while(True): #while the cameras are working this while loop will be initialized
 	#creates the frames for each camera 
@@ -16,6 +16,18 @@ while(True): #while the cameras are working this while loop will be initialized
 	#if loop to break the camera feed when completed. The waitKey determines the number of frames 
 	if cv2.waitKey(1) & 0xFF == ord("q"):
 		break
+
+#Shape of image is accessed by img.shape.
+print "Shape of image: ", frameLeft.shape
+print "Shape of image: ", frameRight.shape
+
+#Total number of pixels
+print "Total number of pixels: ", frameLeft.size
+print "Total number of pixels: ", frameRight.size
+
+#Image datatype
+print frameLeft.dtype
+print frameRight.dtype
 
 #Stops the cameras from recording once connection is broken
 capLeft.release()

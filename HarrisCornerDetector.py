@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 capLeft = cv2.VideoCapture(0)
-capRight = cv2.VideoCapture(2)
+capRight = cv2.VideoCapture(1)
 
 while(True):
 

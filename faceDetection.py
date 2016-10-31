@@ -5,7 +5,7 @@ face_cascade = cv2.CascadeClassifier("/home/darraghmoran11/opencv-master/data/ha
 
 eye_cascade = cv2.CascadeClassifier("/home/darraghmoran11/opencv-master/data/haarcascades/haarcascade_frontalface_default.xml")
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(2)
 
 while(True):
 	ret, img = cap.read()

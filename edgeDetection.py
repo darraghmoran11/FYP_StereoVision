@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 capLeft = cv2.VideoCapture(0) #sets cap1 as the first camera (0 is the default laptop camera which isn't being used)
-capRight = cv2.VideoCapture(2) #sets cap2 as the second camera
+capRight = cv2.VideoCapture(1) #sets cap2 as the second camera
 
 while (True):
 
