@@ -1,8 +1,8 @@
 import numpy as np 
 import cv2
 
-capLeft = cv2.VideoCapture(0) #sets cap1 as the first camera (0 is the default laptop camera which isn't being used)
-capRight = cv2.VideoCapture(1) #sets cap2 as the second camera
+capLeft = cv2.VideoCapture(1) #sets cap1 as the first camera (0 is the default laptop camera which isn't being used)
+capRight = cv2.VideoCapture(2) #sets cap2 as the second camera
 
 while(True): #while the cameras are working this while loop will be initialized
 	#creates the frames for each camera 

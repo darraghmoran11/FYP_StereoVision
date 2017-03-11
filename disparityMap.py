@@ -2,8 +2,8 @@ import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 
-capLeft = cv2.VideoCapture(0)  # sets cap1 as the first camera (0 is the default laptop camera which isn't being used)
-capRight = cv2.VideoCapture(1)  # sets cap2 as the second camera
+capLeft = cv2.VideoCapture(1)  # sets cap1 as the first camera (0 is the default laptop camera which isn't being used)
+capRight = cv2.VideoCapture(2)  # sets cap2 as the second camera
 
 while (True):  # while the cameras are working this while loop will be initialized
     # creates the frames for each camera
@@ -18,8 +18,11 @@ while (True):  # while the cameras are working this while loop will be initializ
     cv2.imshow("frame 2", frameRight)
 
     #Plots the disparity Map
-    stereo = cv2.StereoBM_create(numDisparities=16, blockSize=15)
-    disparity = stereo.compute(imgL, imgR)
+    numDisparites = 16
+    SADwindowsize = 21
+
+    stereo = cv2.StereoBM(0, ndisparities=numDisparites, SADWindowSize=SADwindowsize)
+    disparity = stereo.compute(grayLeft, grayRight)
     plt.imshow(disparity, 'gray')
     plt.show()
 

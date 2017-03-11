@@ -1,8 +1,10 @@
 import numpy as np
 import cv2
 
-capLeft = cv2.VideoCapture(0) #sets cap1 as the first camera (0 is the default laptop camera which isn't being used)
-capRight = cv2.VideoCapture(1) #sets cap2 as the second camera
+capLeft = cv2.VideoCapture(1) #sets cap1 as the first camera (0 is the default laptop camera which isn't being used)
+capRight = cv2.VideoCapture(2) #sets cap2 as the second camera
+
+imgCounter = 0;
 
 while(True):
     # creates the frames for each camera
@@ -24,8 +26,8 @@ while(True):
 
     elif k%256 == 32:
         # SPACE pressed
-        imgL_name = "imgL.png"
-        imgR_name = "imgR.png"
+        imgL_name = "imgL_{}.png".format(imgCounter)
+        imgR_name = "imgR_{}.png".format(imgCounter)
 
         cv2.imwrite(imgL_name, frameLeft)
         cv2.imwrite(imgR_name, frameRight)

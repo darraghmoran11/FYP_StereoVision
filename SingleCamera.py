@@ -1,7 +1,7 @@
 import numpy as np
 import cv2
 
-cap = cv2.VideoCapture(0)  # sets cap as the first camera
+cap = cv2.VideoCapture(2)  # sets cap as the first camera
 
 while (True):  # while the cameras are working this while loop will be initialized
     # creates the frames for each camera
