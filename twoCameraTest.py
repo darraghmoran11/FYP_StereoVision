@@ -13,8 +13,8 @@ while(True): #while the cameras are working this while loop will be initialized
 	grayRight = cv2.cvtColor(frameRight, cv2.COLOR_BGR2GRAY)
 
 	#Shows the content each camera is recording
-	cv2.imshow("frame 1", frameLeft)
-	cv2.imshow("frame 2", frameRight)
+	cv2.imshow("frame left", frameLeft)
+	cv2.imshow("frame right", frameRight)
 
 	
 	#if loop to break the camera feed when completed. The waitKey determines the number of frames 
