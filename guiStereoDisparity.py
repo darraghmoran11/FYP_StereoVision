@@ -2,6 +2,10 @@ import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 
+
+def nothing(x):
+    pass
+    
 cap_left = cv2.VideoCapture(1)
 cap_right = cv2.VideoCapture(2)
 
@@ -11,7 +15,20 @@ cv2.namedWindow('left_Webcam', cv2.WINDOW_NORMAL)
 cv2.namedWindow('right_Webcam', cv2.WINDOW_NORMAL)
 cv2.namedWindow('disparity', cv2.WINDOW_NORMAL)
 
+# create trackbars for color change
+cv2.createTrackbar('R','cvuint8',0,255,nothing)
+cv2.createTrackbar('G','cvuint8',0,255,nothing)
+cv2.createTrackbar('B','cvuint8',0,255,nothing)
+
 while(cv2.waitKey(1) & 0xFF != ord('q')):
+
+
+    # get current positions of four trackbars
+    r = cv2.getTrackbarPos('R','cvuint8')
+    g = cv2.getTrackbarPos('G','cvuint8')
+    b = cv2.getTrackbarPos('B','cvuint8')
+    s = cv2.getTrackbarPos(switch,'cvuint8')
+
     ret1, frame_left = cap_left.read()
     ret2, frame_right = cap_right.read()
     # our operations on the frame come here

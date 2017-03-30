@@ -2,16 +2,18 @@ import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 
-def nothing():
+def changeValue():
+    print "ndisparities:", ndi
+    print "SADWindowSize:", sws
     pass
 
 cap_left = cv2.VideoCapture(1)
 cap_right = cv2.VideoCapture(2)
 
 # create windows
-cv2.namedWindow('left_Webcam', cv2.WINDOW_NORMAL)
-cv2.namedWindow('right_Webcam', cv2.WINDOW_NORMAL)
-cv2.namedWindow('disparity', cv2.WINDOW_NORMAL)
+cv2.namedWindow('left_Webcam', cv2.WINDOW_AUTOSIZE)
+cv2.namedWindow('right_Webcam', cv2.WINDOW_AUTOSIZE)
+cv2.namedWindow('disparity', cv2.WINDOW_AUTOSIZE)
 
 nd = 'ndisparities'
 wd = 'SADWindowSize'
@@ -20,8 +22,17 @@ wnd = 'disparity'
 ndi = nd
 sws = wd
 
-cv2.createTrackbar(nd, wnd, 16, 64, nothing)
-cv2.createTrackbar(wd, wnd, 5, 255, nothing)
+startND = 16
+startWD = 5
+
+endND = 272
+endWD = 255
+
+ndisparitiesRange = endND - startND
+interval =  ndisparitiesRange/16
+
+cv2.createTrackbar(nd, wnd, startND, endND, changeValue)
+cv2.createTrackbar(wd, wnd, startWD, endWD, changeValue)
 
 while(cv2.waitKey(1) & 0xFF != ord('q')):
     ret1, frame_left = cap_left.read()
@@ -34,8 +45,20 @@ while(cv2.waitKey(1) & 0xFF != ord('q')):
 
     ndi=cv2.getTrackbarPos(nd, wnd)
     sws=cv2.getTrackbarPos(wd, wnd)
+    #print "swsB: ", sws
+    if sws%2==0:
+        sws+=1
+        
+    if sws<startWD:
+        sws=5
+    #print "swsA: ", sws
+
+    if not ndi%16==0:
+        ndi=(ndi/16)*16
 
     stereo = cv2.StereoBM(0, ndi, sws)
+
+    #stereo = cv2.StereoBM(0, ndi, sws)
 
     print "ndisparities:", ndi
     print "SADWindowSize:", sws
