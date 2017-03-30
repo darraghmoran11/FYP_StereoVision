@@ -3,8 +3,8 @@ import cv2
 from matplotlib import pyplot as plt
 
 def changeValue():
-    print "ndisparities:", ndi
-    print "SADWindowSize:", sws
+    print "DisparityRange:", ndi
+    print "BlockSize:", sws
     pass
 
 #Capture the camera video feeds
@@ -16,24 +16,26 @@ cv2.namedWindow('left_Webcam', cv2.WINDOW_AUTOSIZE)
 cv2.namedWindow('right_Webcam', cv2.WINDOW_AUTOSIZE)
 cv2.namedWindow('disparity', cv2.WINDOW_AUTOSIZE)
 
-nd = 'ndisparities'
-wd = 'SADWindowSize'
+dr = 'DisparityRange'
+bs = 'BlockSize'
 wnd = 'disparity'
 
-ndi = nd
-sws = wd
+ndi = dr
+sws = bs
 
 startND = 16 #Start value for ndisparities
-startWD = 5  #Start value for SADWindowSize
+startWD = 5 #Start value for SADWindowSize
 
 endND = 272 #End value for ndisparities
 endWD = 255 #End value for ndisparities
 
-#Creates the trackbar for the ndisparites and SADWindowSize variables
-cv2.createTrackbar(nd, wnd, startND, endND, changeValue)
-cv2.createTrackbar(wd, wnd, startWD, endWD, changeValue)
+#ndisparitiesRange = endND - startND
+#interval =  ndisparitiesRange/16
 
-#
+#Creates the trackbar for the ndisparites and SADWindowSize variables
+cv2.createTrackbar(dr, wnd, startND, endND, changeValue)
+cv2.createTrackbar(bs, wnd, startWD, endWD, changeValue)
+
 while(cv2.waitKey(1) & 0xFF != ord('q')):
     #Camera video feeds asigned to appropriate frames
     ret1, frame_left = cap_left.read()
@@ -47,11 +49,10 @@ while(cv2.waitKey(1) & 0xFF != ord('q')):
     cv2.imshow('left_Webcam', gray_left)
     cv2.imshow('right_Webcam', gray_right)
 
-    #adds the trackbar to disparity frame
-    ndi=cv2.getTrackbarPos(nd, wnd)
-    sws=cv2.getTrackbarPos(wd, wnd)
-
-
+    #Adds the trackbar to disparity frame
+    ndi=cv2.getTrackbarPos(dr, wnd)
+    sws=cv2.getTrackbarPos(bs, wnd)
+    
     if sws%2==0:
         sws+=1
         
@@ -65,8 +66,8 @@ while(cv2.waitKey(1) & 0xFF != ord('q')):
     stereo = cv2.StereoBM(0, ndi, sws)
 
     #Prints out the value of the variables
-    print "ndisparities:", ndi
-    print "SADWindowSize:", sws
+    print "DisparityRange:", ndi
+    print "BlockSize:", sws
     
     #Computes the disparity from the two video feeds
     disparity = stereo.compute(gray_left, gray_right)
