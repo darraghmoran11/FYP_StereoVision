@@ -1,6 +1,7 @@
 import numpy as np
 import cv2
 from matplotlib import pyplot as plt
+import time
 
 def changeValue():
     print "DisparityRange:", ndi
@@ -18,7 +19,7 @@ cv2.namedWindow('disparity', cv2.WINDOW_AUTOSIZE)
 
 dr = 'DisparityRange'
 bs = 'BlockSize'
-disp = 'disparity'
+wnd = 'disparity'
 
 ndi = dr
 sws = bs
@@ -33,8 +34,50 @@ endWD = 255 #End value for ndisparities
 #interval =  ndisparitiesRange/16
 
 #Creates the trackbar for the ndisparites and SADWindowSize variables
-cv2.createTrackbar(dr, disp, startND, endND, changeValue)
-cv2.createTrackbar(bs, disp, startWD, endWD, changeValue)
+cv2.createTrackbar(dr, wnd, startND, endND, changeValue)
+cv2.createTrackbar(bs, wnd, startWD, endWD, changeValue)
+
+(major_ver, minor_ver, subminor_ver) = (cv2.__version__).split('.')
+
+# With webcam get(CV_CAP_PROP_FPS) does not work.
+# Let's see for ourselves.
+
+if int(major_ver)  < 3 :
+    fpsLeft = cap_left.get(cv2.cv.CV_CAP_PROP_FPS)
+    print "Frames per second using cap_left.get(cv2.cv.CV_CAP_PROP_FPS): {0}".format(fpsLeft)
+else :
+    fpsLeft = cap_left.get(cv2.CAP_PROP_FPS)
+    print "Frames per second using cap_left.get(cv2.CAP_PROP_FPS) : {0}".format(fpsLeft)
+
+if int(major_ver)  < 3 :
+    fpsRight = cap_right.get(cv2.cv.CV_CAP_PROP_FPS)
+    print "Frames per second using cap_right.get(cv2.cv.CV_CAP_PROP_FPS): {0}".format(fpsRight)
+else :
+    fpsRight = cap_right.get(cv2.CAP_PROP_FPS)
+    print "Frames per second using cap_right.get(cv2.CAP_PROP_FPS) : {0}".format(fpsRight)
+
+# Number of frames to capture
+num_frames = 120;
+
+
+print "Capturing {0} frames".format(num_frames)
+
+# Start time
+start = time.time()
+
+# Grab a few frames
+for i in xrange(0, num_frames) :
+    ret, frameLeft = cap_left.read()
+
+for i in xrange(0, num_frames) :
+    ret, frameRight = cap_right.read()
+
+
+# End time
+end = time.time()
+
+# Time elapsed
+seconds = end - start
 
 while(cv2.waitKey(1) & 0xFF != ord('q')):
     #Camera video feeds asigned to appropriate frames
@@ -50,8 +93,8 @@ while(cv2.waitKey(1) & 0xFF != ord('q')):
     cv2.imshow('right_Webcam', gray_right)
 
     #Adds the trackbar to disparity frame
-    ndi=cv2.getTrackbarPos(dr, disp)
-    sws=cv2.getTrackbarPos(bs, disp)
+    ndi=cv2.getTrackbarPos(dr, wnd)
+    sws=cv2.getTrackbarPos(bs, wnd)
     
     if sws%2==0:
         sws+=1
@@ -81,6 +124,16 @@ while(cv2.waitKey(1) & 0xFF != ord('q')):
     #print "frame right:",frame_right.dtype
     #print "Disparity:",cvuint8.dtype
     # When everything done, release the capture
+    # Calculate frames per second
+    # Find OpenCV version
+
+print "Time taken : {0} seconds".format(seconds)
+
+fpsLeft  = num_frames / seconds;
+print "Estimated frames per second : {0}".format(fpsLeft);
+
+fpsRight  = num_frames / seconds;
+print "Estimated frames per second : {0}".format(fpsRight);
 
 cap_left.release()
 cap_right.release()

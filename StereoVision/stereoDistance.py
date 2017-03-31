@@ -69,19 +69,30 @@ while(cv2.waitKey(1) & 0xFF != ord('q')):
     print "DisparityRange:", ndi
     print "BlockSize:", sws
     
+    print "*******Computing Disparity*******"
     #Computes the disparity from the two video feeds
-    disparity = stereo.compute(gray_left, gray_right)
+    disparity = stereo.compute(gray_left, gray_right).astype(np.float32) / 2.0
+
+    print "*******Finished Disparity*******"
 
     #Disparity needs to be converted to match the format of the camera video feeds
     cvuint8 = cv2.convertScaleAbs(disparity)
 
     #Displays the disparity map
     cv2.imshow('disparity', cvuint8)
+
+    f = 0.4 #focal length
+    b = 8.4 #baseline value
+    a = f * b
+
+    D = a/disparity
+    
     #print "frame left:",frame_left.dtype
     #print "frame right:",frame_right.dtype
     #print "Disparity:",cvuint8.dtype
     # When everything done, release the capture
 
+print "Distance: ", D
 cap_left.release()
 cap_right.release()
 cv2.destroyAllWindows()
