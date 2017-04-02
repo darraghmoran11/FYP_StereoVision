@@ -1,1 +1,6 @@
 # FYP_StereoVision
+
+This was a final year project (FYP) completed as part of the Electronic and Computer Engineering Course at NUIG. A summary of the project is as follows:
+
+The application of stereo vision systems range across many domains including sports, autonomous driving and robotics. A classical stereography system is based on the processing and interpretation of video streams from (at least) two cameras viewing the same real world scene. Based on the analysis of the images (forming the video stream), a three dimensional model of the scene (or the motion of some components therein) can be developed. An alternative to using multiple cameras is to use a single camera which is physically moved in a highly controlled manner to take different views of the same scene. This project will focus on investigating the feasibility and limitations of using low cost (i.e. low frame rate) camera systems for stereo vision (e.g. smartphone cameras). The initial phase of the project will require the student to develop a 3-D stereo vision system using lost cost cameras capable of viewing a static scene in a lab setting (in particular investigating the issue of synchronisation between the camera systems. Later phases will extend the
+scope of the project to the development of an application which must work in the real world.
